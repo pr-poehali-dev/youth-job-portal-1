@@ -36,7 +36,7 @@ const Index = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedDirection, setSelectedDirection] = useState('all');
   const [selectedExperience, setSelectedExperience] = useState('all');
-  const [selectedLocation, setSelectedLocation] = useState('all');
+
   const [selectedType, setSelectedType] = useState('all');
 
   const [jobs, setJobs] = useState<Job[]>([
@@ -45,7 +45,7 @@ const Index = () => {
       title: 'Frontend разработчик',
       company: 'Яндекс',
       logo: '🟡',
-      location: 'Москва',
+      location: 'Великий Новгород',
       type: 'Стажировка',
       experience: 'Без опыта',
       salary: '60 000 - 80 000 ₽',
@@ -58,7 +58,7 @@ const Index = () => {
       title: 'UX/UI Designer',
       company: 'ВКонтакте',
       logo: '🔵',
-      location: 'Санкт-Петербург',
+      location: 'Великий Новгород',
       type: 'Практика',
       experience: 'До 1 года',
       salary: '50 000 - 70 000 ₽',
@@ -71,7 +71,7 @@ const Index = () => {
       title: 'Data Analyst',
       company: 'Сбер',
       logo: '🟢',
-      location: 'Москва',
+      location: 'Великий Новгород',
       type: 'Стажировка',
       experience: 'Без опыта',
       salary: '70 000 - 90 000 ₽',
@@ -84,7 +84,7 @@ const Index = () => {
       title: 'Backend разработчик',
       company: 'Ozon',
       logo: '🔵',
-      location: 'Удалённо',
+      location: 'Великий Новгород',
       type: 'Стажировка',
       experience: 'До 1 года',
       salary: '65 000 - 85 000 ₽',
@@ -97,7 +97,7 @@ const Index = () => {
       title: 'Mobile Developer',
       company: 'Тинькoff',
       logo: '🟡',
-      location: 'Москва',
+      location: 'Великий Новгород',
       type: 'Практика',
       experience: 'Без опыта',
       salary: '55 000 - 75 000 ₽',
@@ -110,7 +110,7 @@ const Index = () => {
       title: 'Marketing Analyst',
       company: 'Авито',
       logo: '🟢',
-      location: 'Москва',
+      location: 'Великий Новгород',
       type: 'Стажировка',
       experience: 'Без опыта',
       salary: '45 000 - 60 000 ₽',
@@ -142,10 +142,10 @@ const Index = () => {
       tag.toLowerCase().includes(selectedDirection.toLowerCase())
     );
     const matchesExperience = selectedExperience === 'all' || job.experience === selectedExperience;
-    const matchesLocation = selectedLocation === 'all' || job.location === selectedLocation;
+
     const matchesType = selectedType === 'all' || job.type === selectedType;
 
-    return matchesSearch && matchesDirection && matchesExperience && matchesLocation && matchesType;
+    return matchesSearch && matchesDirection && matchesExperience && matchesType;
   });
 
   const favoriteJobs = jobs.filter(job => job.isFavorite);
@@ -181,7 +181,7 @@ const Index = () => {
                   Фильтры
                 </CardTitle>
               </CardHeader>
-              <CardContent className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <CardContent className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 <Select value={selectedDirection} onValueChange={setSelectedDirection}>
                   <SelectTrigger>
                     <SelectValue placeholder="Направление" />
@@ -203,18 +203,6 @@ const Index = () => {
                     <SelectItem value="all">Любой опыт</SelectItem>
                     <SelectItem value="Без опыта">Без опыта</SelectItem>
                     <SelectItem value="До 1 года">До 1 года</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select value={selectedLocation} onValueChange={setSelectedLocation}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Локация" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Все локации</SelectItem>
-                    <SelectItem value="Москва">Москва</SelectItem>
-                    <SelectItem value="Санкт-Петербург">Санкт-Петербург</SelectItem>
-                    <SelectItem value="Удалённо">Удалённо</SelectItem>
                   </SelectContent>
                 </Select>
 
