@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Badge } from '@/components/ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import Icon from '@/components/ui/icon';
+import Header from '@/components/Header';
+import HeroSection from '@/components/HeroSection';
+import JobCard from '@/components/JobCard';
+import CompanyCard from '@/components/CompanyCard';
 
 interface Job {
   id: number;
@@ -150,67 +152,10 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50">
-      <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-lg">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <div className="w-10 h-10 gradient-primary rounded-xl flex items-center justify-center">
-                <Icon name="Briefcase" className="text-white" size={24} />
-              </div>
-              <h1 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-                JobSpace
-              </h1>
-            </div>
-            <nav className="flex items-center gap-6">
-              <Button variant="ghost" className="font-medium">
-                <Icon name="Home" className="mr-2" size={18} />
-                Главная
-              </Button>
-              <Button variant="ghost" className="font-medium">
-                <Icon name="Building2" className="mr-2" size={18} />
-                Компании
-              </Button>
-              <Button variant="ghost" className="font-medium">
-                <Icon name="Heart" className="mr-2" size={18} />
-                Избранное
-              </Button>
-              <Button className="gradient-primary text-white hover-scale">
-                <Icon name="User" className="mr-2" size={18} />
-                Профиль
-              </Button>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       <main className="container mx-auto px-4 py-12">
-        <section className="mb-16 animate-fade-in">
-          <div className="relative overflow-hidden rounded-3xl gradient-primary p-12 text-white shadow-2xl">
-            <div className="relative z-10 max-w-2xl">
-              <h2 className="text-5xl font-bold mb-4">
-                Найди свою первую работу мечты
-              </h2>
-              <p className="text-xl mb-8 text-purple-100">
-                Тысячи стажировок и практик от ведущих компаний России
-              </p>
-              <div className="flex gap-4">
-                <Input
-                  type="text"
-                  placeholder="Поиск по вакансиям или компаниям..."
-                  value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
-                  className="flex-1 bg-white/10 border-white/20 text-white placeholder:text-purple-200 backdrop-blur-sm"
-                />
-                <Button size="lg" className="bg-white text-purple-600 hover:bg-purple-50">
-                  <Icon name="Search" className="mr-2" size={20} />
-                  Найти
-                </Button>
-              </div>
-            </div>
-            <div className="absolute right-0 top-0 w-96 h-96 bg-white/10 rounded-full blur-3xl"></div>
-            <div className="absolute right-32 bottom-0 w-64 h-64 bg-pink-500/20 rounded-full blur-3xl"></div>
-          </div>
-        </section>
+        <HeroSection searchQuery={searchQuery} onSearchChange={setSearchQuery} />
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-8">
           <TabsList className="inline-flex h-12 items-center justify-center rounded-xl bg-white p-1 shadow-md">
@@ -288,66 +233,7 @@ const Index = () => {
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredJobs.map((job) => (
-                <Card key={job.id} className="hover-scale border-none shadow-lg overflow-hidden group">
-                  <CardHeader className="space-y-4">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center gap-3">
-                        <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center text-2xl">
-                          {job.logo}
-                        </div>
-                        <div>
-                          <CardTitle className="text-lg group-hover:text-purple-600 transition-colors">
-                            {job.title}
-                          </CardTitle>
-                          <CardDescription>{job.company}</CardDescription>
-                        </div>
-                      </div>
-                      <Button
-                        variant="ghost"
-                        size="icon"
-                        className="hover:scale-110 transition-transform"
-                        onClick={() => toggleFavorite(job.id)}
-                      >
-                        <Icon
-                          name="Heart"
-                          className={job.isFavorite ? 'fill-red-500 text-red-500' : ''}
-                          size={20}
-                        />
-                      </Button>
-                    </div>
-
-                    <div className="flex flex-wrap gap-2">
-                      {job.tags.map((tag, idx) => (
-                        <Badge key={idx} variant="secondary" className="bg-purple-100 text-purple-700">
-                          {tag}
-                        </Badge>
-                      ))}
-                    </div>
-                  </CardHeader>
-
-                  <CardContent className="space-y-4">
-                    <p className="text-sm text-muted-foreground">{job.description}</p>
-                    
-                    <div className="space-y-2 text-sm">
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Icon name="MapPin" size={16} />
-                        {job.location}
-                      </div>
-                      <div className="flex items-center gap-2 text-muted-foreground">
-                        <Icon name="Clock" size={16} />
-                        {job.type} • {job.experience}
-                      </div>
-                      <div className="flex items-center gap-2 font-semibold text-purple-600">
-                        <Icon name="Wallet" size={16} />
-                        {job.salary}
-                      </div>
-                    </div>
-
-                    <Button className="w-full gradient-primary text-white hover-scale">
-                      Откликнуться
-                    </Button>
-                  </CardContent>
-                </Card>
+                <JobCard key={job.id} job={job} onToggleFavorite={toggleFavorite} />
               ))}
             </div>
 
@@ -363,29 +249,7 @@ const Index = () => {
           <TabsContent value="companies" className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {companies.map((company) => (
-                <Card key={company.id} className="hover-scale border-none shadow-lg overflow-hidden group">
-                  <CardHeader>
-                    <div className="flex items-center gap-4">
-                      <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center text-3xl">
-                        {company.logo}
-                      </div>
-                      <div>
-                        <CardTitle className="group-hover:text-purple-600 transition-colors">
-                          {company.name}
-                        </CardTitle>
-                        <CardDescription>
-                          {company.vacancies} открытых вакансий
-                        </CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="space-y-4">
-                    <p className="text-sm text-muted-foreground">{company.description}</p>
-                    <Button className="w-full gradient-accent text-white hover-scale">
-                      Смотреть вакансии
-                    </Button>
-                  </CardContent>
-                </Card>
+                <CompanyCard key={company.id} company={company} />
               ))}
             </div>
           </TabsContent>
@@ -394,66 +258,7 @@ const Index = () => {
             {favoriteJobs.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {favoriteJobs.map((job) => (
-                  <Card key={job.id} className="hover-scale border-none shadow-lg overflow-hidden group">
-                    <CardHeader className="space-y-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center text-2xl">
-                            {job.logo}
-                          </div>
-                          <div>
-                            <CardTitle className="text-lg group-hover:text-purple-600 transition-colors">
-                              {job.title}
-                            </CardTitle>
-                            <CardDescription>{job.company}</CardDescription>
-                          </div>
-                        </div>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="hover:scale-110 transition-transform"
-                          onClick={() => toggleFavorite(job.id)}
-                        >
-                          <Icon
-                            name="Heart"
-                            className="fill-red-500 text-red-500"
-                            size={20}
-                          />
-                        </Button>
-                      </div>
-
-                      <div className="flex flex-wrap gap-2">
-                        {job.tags.map((tag, idx) => (
-                          <Badge key={idx} variant="secondary" className="bg-purple-100 text-purple-700">
-                            {tag}
-                          </Badge>
-                        ))}
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="space-y-4">
-                      <p className="text-sm text-muted-foreground">{job.description}</p>
-                      
-                      <div className="space-y-2 text-sm">
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                          <Icon name="MapPin" size={16} />
-                          {job.location}
-                        </div>
-                        <div className="flex items-center gap-2 text-muted-foreground">
-                          <Icon name="Clock" size={16} />
-                          {job.type} • {job.experience}
-                        </div>
-                        <div className="flex items-center gap-2 font-semibold text-purple-600">
-                          <Icon name="Wallet" size={16} />
-                          {job.salary}
-                        </div>
-                      </div>
-
-                      <Button className="w-full gradient-primary text-white hover-scale">
-                        Откликнуться
-                      </Button>
-                    </CardContent>
-                  </Card>
+                  <JobCard key={job.id} job={job} onToggleFavorite={toggleFavorite} />
                 ))}
               </div>
             ) : (
