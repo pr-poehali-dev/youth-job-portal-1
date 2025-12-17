@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import { QRCodeSVG } from 'qrcode.react';
 import Icon from '@/components/ui/icon';
 import Header from '@/components/Header';
 import HeroSection from '@/components/HeroSection';
@@ -300,8 +301,24 @@ const Index = () => {
               </ul>
             </div>
           </div>
-          <div className="border-t border-white/20 mt-8 pt-8 text-center text-purple-200">
-            <p>© 2024 JobSpace. Все права защищены</p>
+          <div className="border-t border-white/20 mt-8 pt-8">
+            <div className="flex flex-col md:flex-row items-center justify-between gap-6">
+              <p className="text-purple-200">© 2024 JobSpace. Все права защищены</p>
+              <div className="flex items-center gap-4">
+                <div className="text-right">
+                  <p className="font-semibold mb-1">Быстрый доступ к сайту</p>
+                  <p className="text-sm text-purple-200">Отсканируйте QR-код</p>
+                </div>
+                <div className="bg-white p-3 rounded-xl">
+                  <QRCodeSVG 
+                    value={window.location.href}
+                    size={100}
+                    level="H"
+                    includeMargin={false}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </footer>
